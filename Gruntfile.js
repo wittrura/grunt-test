@@ -25,6 +25,32 @@ module.exports = function(grunt) {
         config.jsSrcDir + "*.js"
       ]
     },
+    uglify: {
+      build: {
+        src: config.jsSrcDir + '*.js',
+        dest: config.jsMinDir + 'production.min.js'
+      }
+    },
+    imagemin: {
+      dynamic: {
+        files: [{
+          expand: true,
+          cwd: 'src/images/',
+          src: ['**/*.{png,jpg,gif}'],
+          dest: 'dist/images/build'
+        }]
+      }
+    },
+    responsive_images: {
+      dev: {
+        files: [{
+          expand: true,
+          src: ['images/*.{png,jpg,gif}'],
+          cwd: 'src/',
+          dest: 'dist/'
+        }]
+      }
+    },
     watch: {
       sass: {
         files: config.scssSrcDir + '**/*.scss',
@@ -37,6 +63,9 @@ module.exports = function(grunt) {
     'jshint',
     'sass',
     'concat',
+    'uglify',
+    'imagemin',
+    'responsive_images',
     'watch'
   ]);
 };
