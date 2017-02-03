@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
-  let config = grunt.file.readYAML('Gruntconfig.yml');
+  var config = grunt.file.readYAML('Gruntconfig.yml');
 
     grunt.initConfig({
     sass: {
@@ -15,12 +15,28 @@ module.exports = function(grunt) {
         src: config.jsSrcDir + '*.js',
         dest: config.jsConcatDir + 'app.js'
       }
-
+    },
+    jshint: {
+      options: {
+        "eqeqeq": true
+      },
+      all: [
+        'Gruntfile.js',
+        config.jsSrcDir + "*.js"
+      ]
+    },
+    watch: {
+      sass: {
+        files: config.scssSrcDir + '**/*.scss',
+        tasks: ['sass']
+      }
     }
   });
 
   grunt.registerTask('default', [
+    'jshint',
     'sass',
-    'concat'
+    'concat',
+    'watch'
   ]);
-}
+};
